@@ -1,0 +1,1 @@
+SqlMetal.exe Panic.sdf /dbml:Panic.dbml

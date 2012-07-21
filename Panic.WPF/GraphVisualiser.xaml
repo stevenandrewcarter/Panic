@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Panic.WPF.GraphVisualiser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+             xmlns:local="clr-namespace:Panic.WPF"
+             xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <!-- Data Template -->
+        <DataTemplate x:Key="demoTemplate" DataType="{x:Type local:Vertex}">
+            <Expander IsExpanded="True" Header="{Binding Path=Name}" Foreground="White" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Local TX: " Foreground="White" />
+                        <Label Content="{Binding Path=Site.LocalTX, Mode=OneWay}" Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Local RX: " Foreground="White" />
+                        <Label Content="{Binding Path=Site.LocalRX, Mode=OneWay}" Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Longitude: " Foreground="White" />
+                        <Label Content="{Binding Path=Site.Longitude, Mode=OneWay}" Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Latitude: " Foreground="White" />
+                        <Label Content="{Binding Path=Site.Latitude, Mode=OneWay}" Foreground="White" />
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+            <!-- <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsMale}" Value="false">
+                    <Setter TargetName="img" Property="Source" Value="/Images/girl.ico" />
+                </DataTrigger>
+            </DataTemplate.Triggers> -->
+        </DataTemplate>
+
+        <!-- Vertex Style -->
+        <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="White" 
+                                    Background="Black"
+							        BorderThickness="2"
+							        CornerRadius="10,10,10,10"
+							        Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal">                                
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <ContentPresenter Grid.Row="0" Content="{TemplateBinding Vertex}"  ContentTemplate="{StaticResource demoTemplate}"/>
+                                    </Grid>                                                                    
+                            </StackPanel>                            
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" Color="LightGray" Opacity="0.3" Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Edge Style -->
+        <Style TargetType="{x:Type graphsharp:EdgeControl}">
+            <Style.Resources>
+                <ToolTip x:Key="ToolTipContent">
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold" Text="Edge Information"/>
+                            <TextBlock Text="{Binding ID}"/>
+                        </StackPanel>
+                </ToolTip>
+            </Style.Resources>
+            <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <!-- Main Control Grid -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Background="LightGray" HorizontalAlignment="Stretch" Margin="0">
+                <Label VerticalAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="10" FontFamily="Verdana" FontWeight="Bold" Margin="0,0,0,0"  Content="Pick Layout Type"/>
+                <ComboBox Name="cmbLayouts" ItemsSource="{Binding LayoutAlgorithmTypes}" SelectedItem="{Binding Path=LayoutAlgorithmType, Mode=TwoWay}" Width="150" Height="25" Margin="5" />
+                <Button Name="btnRebuildGraph" Width="24" Height="24" BorderThickness="0" Background="Transparent" Margin="1" ToolTip="Refresh Graph">
+                    <Image Source="Images\refresh.png"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <zoom:ZoomControl Zoom="0.2" ZoomBoxOpacity="0.5" Background="#ff656565" Grid.Row="1">
+            <!-- Graph="{Binding Path=Graph}" -->
+            <local:NetworkGraphLayout x:Name="graphLayout" Margin="10" LayoutAlgorithmType="{Binding Path=LayoutAlgorithmType, Mode=OneWay}" 
+                           OverlapRemovalAlgorithmType="FSA" HighlightAlgorithmType="Simple" />
+        </zoom:ZoomControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="Panic" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="Hardware">
+    <Type Name="Hardware">
+      <Column Name="HardwareID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Make" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ModelNumber" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="TXCapacity" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="RXCapacity" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="LinkHardwareFK" Member="Link" ThisKey="HardwareID" OtherKey="HardwareID" Type="Link" DeleteRule="NO ACTION" />
+    </Type>
+  </Table>
+  <Table Name="Link">
+    <Type Name="Link">
+      <Column Name="LinkID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FromSiteID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ToSiteID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HardwareID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TXOverride" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="RXOverride" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="LinkHardwareFK" Member="Hardware" ThisKey="HardwareID" OtherKey="HardwareID" Type="Hardware" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Site">
+    <Type Name="Site">
+      <Column Name="SiteID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SiteName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LocalTX" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LocalRX" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

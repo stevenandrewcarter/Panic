@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Panic">
+  <DataContextMoniker Name="/Panic" />
+  <nestedChildShapes>
+    <classShape Id="1ad8ac32-cf81-4dc1-bebe-7bf89665d112" absoluteBounds="0.75, 1, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/Panic/Hardware" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b27ca08d-48c1-4e45-b97a-5cf9f2f09475" absoluteBounds="0.765, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f79ff4d3-7577-4c8e-8959-6ee53ed765f0" absoluteBounds="3.5, 1, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/Panic/Link" />
+      <nestedChildShapes>
+        <elementListCompartment Id="498b4cdd-3bff-49d9-b3d6-66e40b0d283b" absoluteBounds="3.515, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8253d681-e77c-42b7-b1df-1192172b03b5" absoluteBounds="0.75, 3.625, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/Panic/Site" />
+      <nestedChildShapes>
+        <elementListCompartment Id="81436d70-be9c-45da-a51b-f731f9757808" absoluteBounds="0.765, 4.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.17390055338542); (3.5 : 2.17390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/Panic/Hardware/Hardware_Link" />
+      <nodes>
+        <classShapeMoniker Id="1ad8ac32-cf81-4dc1-bebe-7bf89665d112" />
+        <classShapeMoniker Id="f79ff4d3-7577-4c8e-8959-6ee53ed765f0" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
