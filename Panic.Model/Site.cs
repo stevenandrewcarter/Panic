@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Panic.Model
-{
+namespace Panic.Model {
   public delegate void SiteChangedEvent(Site aSite);
 
-  public class Site
-  {
+  public class Site {
     #region Constructor
 
-    public Site(int aID, string aName)
-    {
+    public Site(int aID, string aName) {
       id = aID;
       name = aName;
     }
@@ -27,80 +21,65 @@ namespace Panic.Model
 
     #region Properties
 
-    public int ID 
-    { 
-      get { return id; } 
-      private set { id = value; } 
+    public int ID {
+      get { return id; }
+      private set { id = value; }
     }
 
-    public String Name 
-    { 
-      get { return name; } 
-      set 
-      { 
+    public String Name {
+      get { return name; }
+      set {
         name = value;
         if (Changed != null) { Changed(this); }
-      } 
+      }
     }
 
-    public double Latitude 
-    { 
-      get { return latitude; } 
-      set 
-      { 
+    public double Latitude {
+      get { return latitude; }
+      set {
         latitude = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public double Longitude 
-    { 
-      get { return longitude; } 
-      set 
-      { 
+    public double Longitude {
+      get { return longitude; }
+      set {
         longitude = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public double LocalTX 
-    { 
-      get { return localTX; } 
-      set 
-      { 
+    public double LocalTX {
+      get { return localTX; }
+      set {
         localTX = value;
         if (Changed != null) { Changed(this); }
-      } 
+      }
     }
 
-    public double LocalRX 
-    { 
-      get { return localRX; } 
-      set 
-      { 
+    public double LocalRX {
+      get { return localRX; }
+      set {
         localRX = value;
         if (Changed != null) { Changed(this); }
-      } 
+      }
     }
 
-    public bool Enabled 
-    { 
-      get { return enabled; } 
-      set 
-      { 
+    public bool Enabled {
+      get { return enabled; }
+      set {
         enabled = value;
         if (Changed != null) { Changed(this); }
-      } 
+      }
     }
 
-    public String Notes 
-    { 
-      get { return notes; } 
-      set 
-      { 
+    public String Notes {
+      get { return notes; }
+      set {
         notes = value;
         if (Changed != null) { Changed(this); }
-      } 
+      }
     }
 
     #endregion
@@ -120,18 +99,15 @@ namespace Panic.Model
 
     #region Public Methods
 
-    public void SetID(int aID)
-    {
-      if (id == 0)
-      {
+    public void SetID(int aID) {
+      if (id == 0) {
         ID = aID;
       }
     }
 
     #endregion
 
-    public override string ToString()
-    {
+    public override string ToString() {
       return name;
     }
   }

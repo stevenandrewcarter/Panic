@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.SqlServerCe;
+using System.Linq;
 using Panic.Model;
 
-namespace Panic.Repository.SQLRepository
-{
-  public class LinkSQL : ILinkRepository
-  {
+namespace Panic.Repository.SQLRepository {
+  public class LinkSQL : ILinkRepository {
     #region Private Variables
     private Panic.Repository.Linq.Panic context;
     private SqlCeConnection connection;
@@ -21,8 +18,7 @@ namespace Panic.Repository.SQLRepository
     /// Creates a Site Repository which contains the sites
     /// </summary>
     /// <param name="aConnection"></param>
-    public LinkSQL(SqlCeConnection aConnection)
-    {
+    public LinkSQL(SqlCeConnection aConnection) {
       connection = aConnection;
       context = new Linq.Panic(aConnection);
       data = new Dictionary<int, Link>();
@@ -35,47 +31,36 @@ namespace Panic.Repository.SQLRepository
     #endregion
 
 
-    public List<Link> GetAll()
-    {
+    public List<Link> GetAll() {
       return data.Values.ToList();
     }
 
-    public List<Link> Populate()
-    {
+    public List<Link> Populate() {
       var result = from n in context.Link
                    select n;
-      foreach (Panic.Repository.Linq.Link s in result)
-      {
+      foreach (Panic.Repository.Linq.Link s in result) {
         Link entity = BuildLink(s);
         Add(entity);
       }
       return data.Values.ToList<Link>();
     }
 
-    public Link GetByID(int id)
-    {
-      if (data.ContainsKey(id))
-      {
+    public Link GetByID(int id) {
+      if (data.ContainsKey(id)) {
         return data[id];
-      }
-      else
-      {
+      } else {
         throw new IndexOutOfRangeException("Link (" + id.ToString() + ") does not exist");
       }
     }
 
-    public bool Add(Link entity)
-    {
+    public bool Add(Link entity) {
       bool added = false;
-      if (entity.ID == 0)
-      {
+      if (entity.ID == 0) {
         entity.SetID(InsertLink(entity));
       }
-      if (!data.ContainsKey(entity.ID))
-      {
+      if (!data.ContainsKey(entity.ID)) {
         data.Add(entity.ID, entity);
-        if (LinksChanged != null)
-        {
+        if (LinksChanged != null) {
           LinksChanged(entity);
         }
         entity.Changed += new LinkChangedEvent(entity_Changed);
@@ -84,23 +69,18 @@ namespace Panic.Repository.SQLRepository
       return added;
     }
 
-    private void entity_Changed(Link aLink)
-    {
+    private void entity_Changed(Link aLink) {
       // Update the site in the Database
-      if (UpdateLink(aLink))
-      {
-        if (LinksChanged != null)
-        {
+      if (UpdateLink(aLink)) {
+        if (LinksChanged != null) {
           LinksChanged(aLink);
         }
       }
     }
 
-    public bool Remove(Link entity)
-    {
+    public bool Remove(Link entity) {
       bool removed = false;
-      if (data.ContainsKey(entity.ID))
-      {
+      if (data.ContainsKey(entity.ID)) {
         data.Remove(entity.ID);
         removed = true;
       }
@@ -109,8 +89,7 @@ namespace Panic.Repository.SQLRepository
 
     #region Private Methods
 
-    private bool UpdateLink(Link aLink)
-    {
+    private bool UpdateLink(Link aLink) {
       string query = string.Format(@"UPDATE LINK
         SET
           FromSiteID = '{0}', 
@@ -137,8 +116,7 @@ namespace Panic.Repository.SQLRepository
       return result > 0;
     }
 
-    private int InsertLink(Link aLink)
-    {
+    private int InsertLink(Link aLink) {
       int lastID = 0;
       string query = string.Format(@"INSERT INTO LINK
         (FromSiteID, ToSiteID, HardwareID, TXOverride, RXOverride, Enabled, Notes)
@@ -154,8 +132,7 @@ namespace Panic.Repository.SQLRepository
       SqlCeCommand command = new SqlCeCommand(query, connection);
       connection.Open();
       int result = command.ExecuteNonQuery();
-      if (result > 0)
-      {
+      if (result > 0) {
         SqlCeCommand command1 = new SqlCeCommand("select @@identity ", connection);
         lastID = Convert.ToInt32(command1.ExecuteScalar());
       }
@@ -163,10 +140,8 @@ namespace Panic.Repository.SQLRepository
       return lastID;
     }
 
-    private Link BuildLink(Panic.Repository.Linq.Link aLink)
-    {
-      Link link = new Link(aLink.LinkID)
-      {
+    private Link BuildLink(Panic.Repository.Linq.Link aLink) {
+      Link link = new Link(aLink.LinkID) {
         Enabled = (bool)aLink.Enabled,
         FromSiteID = aLink.FromSiteID,
         ToSiteID = aLink.ToSiteID,

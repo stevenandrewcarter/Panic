@@ -1,14 +1,11 @@
 ﻿
-namespace Panic.Model
-{
+namespace Panic.Model {
   public delegate void PropertyChangedEvent(Hardware aHardware);
 
-  public class Hardware
-  {
+  public class Hardware {
     #region Constructor
 
-    public Hardware(int aID)
-    {
+    public Hardware(int aID) {
       ID = aID;
     }
 
@@ -35,10 +32,8 @@ namespace Panic.Model
 
     #region Public Methods
 
-    public void SetID(int aID)
-    {
-      if (ID == 0)
-      {
+    public void SetID(int aID) {
+      if (ID == 0) {
         ID = aID;
       }
     }

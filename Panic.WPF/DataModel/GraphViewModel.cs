@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using GraphSharp.Controls;
-using Panic.Repository;
 using Panic.Model;
+using Panic.Repository;
 
-namespace Panic.WPF
-{
+namespace Panic.WPF {
   public class NetworkGraphLayout : GraphLayout<Vertex, Edge, NetworkGraph> { }
 
-  public class GraphPanelViewModel : INotifyPropertyChanged
-  {
+  public class GraphPanelViewModel : INotifyPropertyChanged {
     #region Private Variables
 
     private ISiteRepository siteRepository;
@@ -26,8 +22,7 @@ namespace Panic.WPF
     #endregion
 
     #region Ctor
-    public GraphPanelViewModel(ISiteRepository aSiteRepository, ILinkRepository aLinkRepository)
-    {
+    public GraphPanelViewModel(ISiteRepository aSiteRepository, ILinkRepository aLinkRepository) {
       Graph = new NetworkGraph(true);
       vertices = new Dictionary<int, Vertex>();
       siteRepository = aSiteRepository;
@@ -47,50 +42,41 @@ namespace Panic.WPF
       RebuildGraph();
 
       //Pick a default Layout Algorithm Type
-      LayoutAlgorithmType = "BoundedFR";      
+      LayoutAlgorithmType = "BoundedFR";
     }
 
-    public void RebuildGraph()
-    {
-      if (reBuild)
-      {
+    public void RebuildGraph() {
+      if (reBuild) {
         reBuild = false;
         vertices.Clear();
         Graph = new NetworkGraph(true);
         List<Site> sites = siteRepository.GetAll();
-        foreach (Site s in sites)
-        {
-          if (s.Enabled)
-          {
+        foreach (Site s in sites) {
+          if (s.Enabled) {
             vertices.Add(s.ID, new Vertex(s));
           }
         }
         Graph.AddVertexRange(vertices.Values);
         List<Link> links = linkRepository.GetAll();
-        foreach (Link l in links)
-        {
-          if (l.Enabled)
-          {
+        foreach (Link l in links) {
+          if (l.Enabled) {
             AddNewGraphEdge(vertices[l.FromSiteID], vertices[l.ToSiteID]);
           }
-        }      
+        }
       }
     }
 
-    private void linkRepository_LinksChanged(Model.Link aLink)
-    {
+    private void linkRepository_LinksChanged(Model.Link aLink) {
       reBuild = true;
     }
 
-    private void siteRepository_SitesChanged(Model.Site aSite)
-    {
+    private void siteRepository_SitesChanged(Model.Site aSite) {
       reBuild = true;
     }
-    #endregion    
+    #endregion
 
     #region Private Methods
-    private Edge AddNewGraphEdge(Vertex from, Vertex to)
-    {
+    private Edge AddNewGraphEdge(Vertex from, Vertex to) {
       string edgeString = string.Format("{0}-{1} Connected", from.ID, to.ID);
       Edge newEdge = new Edge(edgeString, from, to);
       Graph.AddEdge(newEdge);
@@ -101,37 +87,29 @@ namespace Panic.WPF
 
     #region Public Properties
 
-    public List<String> LayoutAlgorithmTypes
-    {
+    public List<String> LayoutAlgorithmTypes {
       get { return layoutAlgorithmTypes; }
     }
 
 
-    public string LayoutAlgorithmType
-    {
-      get 
-      {
-        if (graph.VertexCount < 2 && (layoutAlgorithmType == "LinLog" || layoutAlgorithmType == "EfficientSugiyama"))
-        {
+    public string LayoutAlgorithmType {
+      get {
+        if (graph.VertexCount < 2 && (layoutAlgorithmType == "LinLog" || layoutAlgorithmType == "EfficientSugiyama")) {
           layoutAlgorithmType = "BoundedFR";
         }
-        return layoutAlgorithmType; 
+        return layoutAlgorithmType;
       }
-      set
-      {
+      set {
         layoutAlgorithmType = value;
         NotifyPropertyChanged("LayoutAlgorithmType");
       }
     }
 
-    public NetworkGraph Graph
-    {
-      get 
-      {        
-        return graph; 
+    public NetworkGraph Graph {
+      get {
+        return graph;
       }
-      set
-      {
+      set {
         graph = value;
         // NotifyPropertyChanged("Graph");
       }
@@ -142,10 +120,8 @@ namespace Panic.WPF
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void NotifyPropertyChanged(String info)
-    {
-      if (PropertyChanged != null)
-      {
+    private void NotifyPropertyChanged(String info) {
+      if (PropertyChanged != null) {
         PropertyChanged(this, new PropertyChangedEventArgs(info));
       }
     }

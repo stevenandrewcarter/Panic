@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Panic.Model;
 
-namespace Panic.Repository
-{
+namespace Panic.Repository {
   public delegate void AddedHardwareHandler(Hardware aHardware);
 
-  public interface IHardwareRepository : IRepository<Hardware>
-  {
+  public interface IHardwareRepository : IRepository<Hardware> {
     #region Events
     event AddedHardwareHandler AddedHardware;
     #endregion

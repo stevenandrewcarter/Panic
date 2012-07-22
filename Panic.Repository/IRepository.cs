@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-namespace Panic.Repository
-{
+namespace Panic.Repository {
   /// <summary>
   /// Default Interface for a Repository
   /// </summary>
-  public interface IRepository<T>
-  {
+  public interface IRepository<T> {
     T GetByID(int id);
     List<T> GetAll();
     bool Add(T entity);

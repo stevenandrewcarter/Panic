@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Panic.Model
-{
+﻿
+namespace Panic.Model {
   public delegate void LinkChangedEvent(Link aLink);
 
-  public class Link
-  {
+  public class Link {
     private int fromSiteID;
     private int toSiteID;
     private int hardwareID;
@@ -18,8 +12,7 @@ namespace Panic.Model
 
     #region Constructor
 
-    public Link(int aID)
-    {
+    public Link(int aID) {
       ID = aID;
     }
 
@@ -31,43 +24,35 @@ namespace Panic.Model
 
     #endregion
 
-    public int ID { get; private set; }    
+    public int ID { get; private set; }
 
-    public bool Enabled 
-    {
+    public bool Enabled {
       get { return enabled; }
-      set
-      {
+      set {
         enabled = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public int FromSiteID 
-    {
+    public int FromSiteID {
       get { return fromSiteID; }
-      set
-      {
+      set {
         fromSiteID = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public int ToSiteID
-    {
+    public int ToSiteID {
       get { return toSiteID; }
-      set
-      {
+      set {
         toSiteID = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public int HardwareID 
-    {
+    public int HardwareID {
       get { return hardwareID; }
-      set
-      {
+      set {
         hardwareID = value;
         if (Changed != null) { Changed(this); }
       }
@@ -75,30 +60,24 @@ namespace Panic.Model
 
     public string Notes { get; set; }
 
-    public double RXOverride 
-    {
+    public double RXOverride {
       get { return rxOverride; }
-      set
-      {
+      set {
         rxOverride = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public double TXOverride 
-    {
+    public double TXOverride {
       get { return txOverride; }
-      set
-      {
+      set {
         txOverride = value;
         if (Changed != null) { Changed(this); }
       }
     }
 
-    public void SetID(int aID)
-    {
-      if (ID == 0)
-      {
+    public void SetID(int aID) {
+      if (ID == 0) {
         ID = aID;
       }
     }

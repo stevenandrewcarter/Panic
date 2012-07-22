@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
-using Panic.Repository;
-using System.Data.SqlServerCe;
 using Panic.Model;
-using System;
-using System.Collections.ObjectModel;
+using Panic.Repository;
 
-namespace Panic.WPF.DataModel
-{
+namespace Panic.WPF.DataModel {
   public delegate void LoadSiteComboBoxesEvent(List<Site> sites);
 
-  public class DataConfigurationViewModel : INotifyPropertyChanged
-  {
+  public class DataConfigurationViewModel : INotifyPropertyChanged {
     #region Private Variables
     private ISiteRepository siteRepository;
     private ILinkRepository linkRepository;
@@ -26,12 +22,10 @@ namespace Panic.WPF.DataModel
 
     public event LoadSiteComboBoxesEvent LoadSiteComboBoxes;
 
-    public DataConfigurationViewModel()
-    {
+    public DataConfigurationViewModel() {
     }
-    
-    public void Initialise(ISiteRepository aSiteRepository, ILinkRepository aLinkRepository, IHardwareRepository aHardwareRepository)
-    {      
+
+    public void Initialise(ISiteRepository aSiteRepository, ILinkRepository aLinkRepository, IHardwareRepository aHardwareRepository) {
       // Create the Site Data Repository
       siteRepository = aSiteRepository;
       siteRepository.Populate();
@@ -50,27 +44,22 @@ namespace Panic.WPF.DataModel
       NotifyPropertyChanged("Hardwares");
     }
 
-    private void siteRepository_SitesChanged(Site aSite)
-    {
+    private void siteRepository_SitesChanged(Site aSite) {
       BuildSiteInformation();
     }
 
-    private void BuildSiteInformation()
-    {
+    private void BuildSiteInformation() {
       List<Site> sites = siteRepository.GetAll();
       Sites = CollectionViewSource.GetDefaultView(sites);
-      if (LoadSiteComboBoxes != null)
-      {
+      if (LoadSiteComboBoxes != null) {
         LoadSiteComboBoxes(sites);
       }
       NotifyPropertyChanged("Sites");
       NotifyPropertyChanged("Links");
     }
 
-    public void AddNewSite()
-    {
-      Site aSite = new Site(0, "") 
-      { 
+    public void AddNewSite() {
+      Site aSite = new Site(0, "") {
         Enabled = false,
         Latitude = 0,
         Longitude = 0,
@@ -81,10 +70,8 @@ namespace Panic.WPF.DataModel
       BuildSiteInformation();
     }
 
-    public void AddNewLink()
-    {
-      Link aLink = new Link(0)
-      {
+    public void AddNewLink() {
+      Link aLink = new Link(0) {
         Enabled = false,
         FromSiteID = 1,
         ToSiteID = 2,
@@ -97,11 +84,9 @@ namespace Panic.WPF.DataModel
       NotifyPropertyChanged("Links");
     }
 
-    public void AddNewHardware()
-    {
-      Hardware aHardware = new Hardware(0)
-      {
-        Enabled = false        
+    public void AddNewHardware() {
+      Hardware aHardware = new Hardware(0) {
+        Enabled = false
       };
       hardwareRepository.Add(aHardware);
       Hardwares = CollectionViewSource.GetDefaultView(hardwareRepository.GetAll());
@@ -112,10 +97,8 @@ namespace Panic.WPF.DataModel
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void NotifyPropertyChanged(String info)
-    {
-      if (PropertyChanged != null)
-      {
+    private void NotifyPropertyChanged(String info) {
+      if (PropertyChanged != null) {
         PropertyChanged(this, new PropertyChangedEventArgs(info));
       }
     }

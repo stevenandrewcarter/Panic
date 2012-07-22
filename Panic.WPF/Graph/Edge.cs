@@ -2,23 +2,19 @@
 using System.Diagnostics;
 using QuickGraph;
 
-namespace Panic.WPF
-{
+namespace Panic.WPF {
   /// <summary>
-    /// A simple identifiable edge.
-    /// </summary>
+  /// A simple identifiable edge.
+  /// </summary>
   [DebuggerDisplay("{Source.ID} -> {Target.ID}")]
-  public class Edge : Edge<Vertex>, INotifyPropertyChanged
-  {
-    public string ID
-    {
+  public class Edge : Edge<Vertex>, INotifyPropertyChanged {
+    public string ID {
       get;
       private set;
     }
 
     public Edge(string id, Vertex source, Vertex target)
-      : base(source, target)
-    {
+      : base(source, target) {
       ID = id;
     }
 
@@ -26,10 +22,8 @@ namespace Panic.WPF
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void NotifyPropertyChanged(string info)
-    {
-      if (PropertyChanged != null)
-      {
+    private void NotifyPropertyChanged(string info) {
+      if (PropertyChanged != null) {
         PropertyChanged(this, new PropertyChangedEventArgs(info));
       }
     }

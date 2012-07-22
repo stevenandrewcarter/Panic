@@ -1,9 +1,7 @@
 ﻿using QuickGraph;
 
-namespace Panic.WPF
-{
-  public class NetworkGraph : BidirectionalGraph<Vertex, Edge>
-  {
+namespace Panic.WPF {
+  public class NetworkGraph : BidirectionalGraph<Vertex, Edge> {
     public NetworkGraph() { }
 
     public NetworkGraph(bool allowParallelEdges)
