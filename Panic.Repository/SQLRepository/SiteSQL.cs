@@ -18,7 +18,7 @@ namespace Panic.Repository.SQLRepository {
     /// Creates a Site Repository which contains the sites
     /// </summary>
     /// <param name="aConnection"></param>
-    public SiteSQL(SqlCeConnection aConnection) {
+    public SiteSQL(SqlCeConnection aConnection) {         
       connection = aConnection;
       context = new Linq.Panic(aConnection);
       data = new Dictionary<int, Model.Site>();
@@ -47,7 +47,8 @@ namespace Panic.Repository.SQLRepository {
     public Site GetByID(int id) {
       if (data.ContainsKey(id)) {
         return data[id];
-      } else {
+      }
+      else {
         throw new IndexOutOfRangeException("Site (" + id.ToString() + ") does not exist");
       }
     }

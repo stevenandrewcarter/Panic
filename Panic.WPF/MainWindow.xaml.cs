@@ -15,8 +15,11 @@ namespace Panic.WPF {
     #endregion
 
     public MainWindow() {
-      InitializeComponent();
+      InitializeComponent();      
       SqlCeConnection connection = new SqlCeConnection("Data Source=Panic.sdf");
+      // Upgrade the database if required
+      SqlCeEngine engine = new SqlCeEngine(connection.ConnectionString);
+      engine.Upgrade();
       siteRepository = new SiteSQL(connection);
       linkRepository = new LinkSQL(connection);
       hardwareRepository = new HardwareSQL(connection);
