@@ -192,9 +192,6 @@
     <Resource Include="Images\add2.png" />
     <Resource Include="Images\delete2.png" />
     <Resource Include="Images\refresh.png" />
-    <Content Include="Panic.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
